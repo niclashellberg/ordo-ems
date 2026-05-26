@@ -1,16 +1,16 @@
-# Supervisor passes BUILD_FROM per architecture (see build.yaml).
-ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base-debian:bookworm
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /app
 
-# cvxpy + highspy need a glibc toolchain (Alpine/musl builds often fail on Pi).
+# Debian bookworm base (glibc) — required for cvxpy / highspy on Raspberry Pi.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         python3 \
         python3-pip \
+        python3-venv \
         python3-dev \
         build-essential \
         gfortran \
@@ -19,9 +19,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /app/requirements.txt
-RUN pip3 install --no-cache-dir --break-system-packages --upgrade pip \
-    && pip3 install --no-cache-dir --break-system-packages numpy \
-    && pip3 install --no-cache-dir --break-system-packages -r /app/requirements.txt
+RUN python3 -m venv /app/venv \
+    && /app/venv/bin/pip install --no-cache-dir --upgrade pip \
+    && /app/venv/bin/pip install --no-cache-dir numpy \
+    && /app/venv/bin/pip install --no-cache-dir -r /app/requirements.txt
+
+ENV PATH="/app/venv/bin:${PATH}"
+ENV PYTHONPATH=/app
+ENV CONFIG_PATH=/data/options.yaml
 
 COPY src/ /app/src/
 COPY config/example.yaml /app/config/example.yaml
@@ -29,7 +34,8 @@ COPY energy_mpc.py /app/energy_mpc.py
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-ENV PYTHONPATH=/app
-ENV CONFIG_PATH=/data/options.yaml
+LABEL \
+    io.hass.type="addon" \
+    io.hass.arch="aarch64|amd64"
 
 CMD ["/run.sh"]

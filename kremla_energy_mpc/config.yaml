@@ -1,7 +1,8 @@
 name: Kremla Energy MPC
 description: Battery + EV MPC optimizer for Home Assistant (SE3 Nord Pool)
-version: "0.1.0"
+version: "0.1.1"
 slug: kremla_energy_mpc
+url: https://github.com/niclashellberg/ordo-ems/tree/main/kremla_energy_mpc
 arch:
   - aarch64
   - amd64
@@ -15,13 +16,13 @@ homeassistant: "2024.1.0"
 options:
   homeassistant_url: "http://supervisor/core"
   nordpool_entity: "sensor.nord_pool_se3_prices"
-  model_bundle_url: "http://CHANGE_ME_NAS/kremla/models/latest.tar.gz"
+  model_bundle_url: ""
   loop_interval_minutes: 15
   anthropic_api_key: ""
 schema:
   homeassistant_url: str
   nordpool_entity: str
-  model_bundle_url: url
+  model_bundle_url: str?
   loop_interval_minutes: int(5,60)?
   anthropic_api_key: password?
 map:

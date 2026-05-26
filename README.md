@@ -11,11 +11,36 @@ Repository: https://github.com/niclashellberg/ordo-ems
 
 ## Home Assistant add-on install
 
-1. **Settings → Add-ons → Add-on store → ⋮ → Repositories**
-2. Add: `https://github.com/niclashellberg/ordo-ems`
-3. Install **Kremla Energy MPC**, configure entity IDs (see `config/example.yaml`), start.
+### 1. Add the repository (HTTPS only)
 
-Before publishing add-on changes, run `./scripts/sync_addon.sh` so `kremla_energy_mpc/` contains real copies of `src/` (HA cannot build through symlinks to parent folders).
+**Settings → Add-ons → Add-on store → ⋮ → Repositories**
+
+Paste **exactly** (no `git@`, no `.git` suffix):
+
+```text
+https://github.com/niclashellberg/ordo-ems
+```
+
+Or open this link on a device logged into Home Assistant:
+
+[Add Ordo EMS repository](https://my.home-assistant.io/redirect/supervisor/addon/store/?repository_url=https%3A%2F%2Fgithub.com%2Fniclashellberg%2Fordo-ems)
+
+Then click **Add**, wait a few seconds, and **Check for updates**.
+
+If you see `GitHub returned 404`, confirm the repo is public at https://github.com/niclashellberg/ordo-ems and retry (do not use `git@github.com:...`).
+
+### 2. Install the add-on
+
+Under the new **Ordo EMS** section, install **Kremla Energy MPC** (v0.1.1+).
+
+First build on a Pi can take **15–25 minutes** (installing cvxpy). Use **Rebuild** after repo updates.
+
+### 3. Configure
+
+- **Add-on → Configuration**: Nord Pool entity, NAS model URL, API key.
+- **`/data/options.yaml`**: full entity list — template in `config/example.yaml`.
+
+Before publishing add-on changes, run `./scripts/sync_addon.sh` so `kremla_energy_mpc/` contains real copies of `src/`.
 4. API / ingress on port **8765** — see `docs/API.md`.
 
 ---
