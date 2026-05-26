@@ -1,11 +1,11 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+# Supervisor 2026.04+ no longer injects BUILD_FROM / build.yaml — pin base explicitly.
+# Multi-arch image: https://github.com/home-assistant/docker-base
+FROM ghcr.io/home-assistant/base-debian:bookworm
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /app
 
-# Debian bookworm base (glibc) — required for cvxpy / highspy on Raspberry Pi.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         python3 \
@@ -36,6 +36,7 @@ RUN chmod +x /run.sh
 
 LABEL \
     io.hass.type="addon" \
-    io.hass.arch="aarch64|amd64"
+    io.hass.arch="aarch64|amd64" \
+    org.opencontainers.image.source="https://github.com/niclashellberg/ordo-ems"
 
 CMD ["/run.sh"]

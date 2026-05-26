@@ -27,7 +27,7 @@ Or open this link on a device logged into Home Assistant:
 
 Then click **Add**, wait a few seconds, and **Check for updates**.
 
-If you see `GitHub returned 404`, confirm the repo is public at https://github.com/niclashellberg/ordo-ems and retry (do not use `git@github.com:...`).
+If you see `GitHub returned 404`, see **[docs/HA_INSTALL.md](docs/HA_INSTALL.md)** (network test, local add-on fallback). Do not use `git@github.com:...`.
 
 ### 2. Install the add-on
 
