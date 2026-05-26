@@ -14,6 +14,8 @@ Repository: https://github.com/niclashellberg/ordo-ems
 1. **Settings → Add-ons → Add-on store → ⋮ → Repositories**
 2. Add: `https://github.com/niclashellberg/ordo-ems`
 3. Install **Kremla Energy MPC**, configure entity IDs (see `config/example.yaml`), start.
+
+Before publishing add-on changes, run `./scripts/sync_addon.sh` so `kremla_energy_mpc/` contains real copies of `src/` (HA cannot build through symlinks to parent folders).
 4. API / ingress on port **8765** — see `docs/API.md`.
 
 ---

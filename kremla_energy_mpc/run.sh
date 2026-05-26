@@ -9,4 +9,4 @@ if [ -z "$CONFIG_PATH" ] || [ ! -f "$CONFIG_PATH" ]; then
   export CONFIG_PATH=/data/options.yaml
 fi
 
-exec python -m src.main
+exec python3 -m src.main
