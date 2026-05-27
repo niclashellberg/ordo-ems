@@ -56,6 +56,18 @@ class SolveResult:
     duals: dict = field(default_factory=dict)
 
 
+def _solve_lp(prob: cp.Problem) -> None:
+    """Prefer solvers with reliable aarch64 wheels (no HiGHS compile on Pi)."""
+    for solver in ("CLARABEL", "OSQP", "SCS"):
+        try:
+            prob.solve(solver=solver)
+            if prob.status in ("optimal", "optimal_inaccurate"):
+                return
+        except Exception:
+            continue
+    prob.solve()
+
+
 def apply_extra_loads(load: np.ndarray, overrides: list[Override]) -> np.ndarray:
     load = load.copy()
     for ov in overrides:
@@ -135,7 +147,7 @@ def solve_mpc(
                 soft_penalty += 1e3 * slack
 
     prob = cp.Problem(cp.Minimize(cost + soft_penalty), cons)
-    prob.solve(solver=cp.HIGHS)
+    _solve_lp(prob)
 
     feasible = prob.status in ("optimal", "optimal_inaccurate")
     if not feasible:

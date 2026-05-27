@@ -1,6 +1,7 @@
-numpy>=1.26
-cvxpy>=1.5
-highspy>=1.7
+numpy>=1.26,<3
+cvxpy>=1.5,<2
+clarabel>=0.8
+osqp>=0.6
 pyyaml>=6.0
 aiohttp>=3.9
 fastapi>=0.115
