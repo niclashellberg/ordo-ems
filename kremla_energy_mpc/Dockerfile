@@ -30,7 +30,7 @@ RUN chmod +x /run.sh
 LABEL \
     io.hass.type="addon" \
     io.hass.arch="aarch64|amd64" \
-    io.hass.version="0.1.3" \
+    io.hass.version="0.1.4" \
     org.opencontainers.image.source="https://github.com/niclashellberg/ordo-ems"
 
 CMD ["/run.sh"]

@@ -27,9 +27,11 @@ If install failed before:
 1. **Settings → Add-ons → Kremla Energy MPC**
 2. If present: **Stop → Uninstall**
 3. **Settings → Add-ons → Add-on store → ⋮ → Check for updates**
-4. Install **Kremla Energy MPC** version **0.1.3** (builds on Pi, no HiGHS compile)
+4. Install **Kremla Energy MPC** version **0.1.4** or newer (builds on Pi, no HiGHS compile)
 
 First install: about **5–10 minutes** on Pi 5 (pip wheels only).
+
+**v0.1.4** fixes a broken `config/example.yaml` symlink that caused Docker `COPY` to fail during build.
 
 ---
 

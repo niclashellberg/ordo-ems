@@ -1,6 +1,6 @@
 name: Kremla Energy MPC
 description: Battery + EV MPC optimizer for Home Assistant (SE3 Nord Pool)
-version: "0.1.3"
+version: "0.1.4"
 slug: kremla_energy_mpc
 url: https://github.com/niclashellberg/ordo-ems/tree/main/kremla_energy_mpc
 arch:

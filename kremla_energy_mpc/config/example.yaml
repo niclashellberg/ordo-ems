@@ -1,1 +1,63 @@
-../../config/example.yaml
+# Copy to /data/options.yaml in the add-on or set CONFIG_PATH for local dev.
+# Replace entity IDs with your Sungrow / Tesla / Nord Pool entities.
+
+homeassistant:
+  url: "http://supervisor/core"
+  token: ""  # or SUPERVISOR_TOKEN env on HAOS
+
+entities:
+  solar_power: "sensor.total_dc_power"
+  house_load: "sensor.load_power"
+  house_soc: "sensor.battery_level_nominal"
+  house_soc_energy: "sensor.battery_charge_nominal"
+  car_soc: "sensor.niclas_tesla_battery"
+  car_energy: ""
+  car_plugged: "binary_sensor.niclas_tesla_charger"
+  car_charge_limit: "number.niclas_tesla_charge_limit"
+  nordpool: "sensor.nord_pool_se3_prices"
+  battery_charge_power: "number.sungrow_battery_charge_power"
+  battery_discharge_power: "number.sungrow_battery_discharge_power"
+  car_charge_power: "number.tesla_charging_amps"
+
+plant:
+  e_house_max: 51400
+  p_hc_max: 10000
+  p_hd_max: 10000
+  p_exp_max: 12000
+  p_car_max: 2990
+  min_soc_fraction: 0.05
+  vat: 0.25
+  # SEK/Wh before VAT bundle (17.2 and 36 öre/kWh)
+  grid_fee_per_wh: 0.000172
+  energy_tax_per_wh: 0.00036
+  eta_c: 0.95
+  eta_d: 0.95
+  eta_car: 0.95
+
+loop:
+  timestep_minutes: 15
+  horizon_hours: 48
+  interval_minutes: 15
+
+models:
+  bundle_url: "http://YOUR_NAS.local/kremla/models/latest.tar.gz"
+  local_path: "/data/models"
+  refresh_hours: 168  # weekly — solar/load drift seasonally
+
+api:
+  host: "0.0.0.0"
+  port: 8765
+  anthropic_model: "claude-sonnet-4-20250514"
+  # anthropic_api_key: set via add-on secret or ANTHROPIC_API_KEY env
+
+schedule:
+  unplug_start_hour: 7
+  unplug_end_hour: 17
+
+e_car_max_wh: 100000
+car_target_soc_fraction: 0.90
+car_deadline_hour: 7
+
+sauna:
+  energy_wh_per_run: 10000
+  power_w: 6000
